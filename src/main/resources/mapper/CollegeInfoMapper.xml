@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tit.ias.mapper.CollegeInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.tit.ias.entity.CollegeInfo">
+    <id column="collegeNum" jdbcType="INTEGER" property="collegeNum" />
+    <result column="collegeName" jdbcType="VARCHAR" property="collegeName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    collegeNum, collegeName
+  </sql>
+  <select id="selectByExample" parameterType="cn.tit.ias.entity.CollegeInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ias_college
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ias_college
+    where collegeNum = #{collegeNum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ias_college
+    where collegeNum = #{collegeNum,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.tit.ias.entity.CollegeInfo">
+    insert into ias_college (collegeNum, collegeName)
+    values (#{collegeNum,jdbcType=INTEGER}, #{collegeName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.tit.ias.entity.CollegeInfo">
+    insert into ias_college
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="collegeNum != null">
+        collegeNum,
+      </if>
+      <if test="collegeName != null">
+        collegeName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="collegeNum != null">
+        #{collegeNum,jdbcType=INTEGER},
+      </if>
+      <if test="collegeName != null">
+        #{collegeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.tit.ias.entity.CollegeInfo">
+    update ias_college
+    <set>
+      <if test="collegeName != null">
+        collegeName = #{collegeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where collegeNum = #{collegeNum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.tit.ias.entity.CollegeInfo">
+    update ias_college
+    set collegeName = #{collegeName,jdbcType=VARCHAR}
+    where collegeNum = #{collegeNum,jdbcType=INTEGER}
+  </update>
+</mapper>

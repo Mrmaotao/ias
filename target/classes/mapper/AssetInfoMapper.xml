@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tit.ias.mapper.AssetInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.tit.ias.entity.AssetInfo">
+    <id column="assetNum" jdbcType="VARCHAR" property="assetNum" />
+    <result column="assetName" jdbcType="VARCHAR" property="assetName" />
+    <result column="assetModel" jdbcType="VARCHAR" property="assetModel" />
+    <result column="assetPrice" jdbcType="REAL" property="assetPrice" />
+    <result column="assetFactory" jdbcType="VARCHAR" property="assetFactory" />
+    <result column="assetDocumentNum" jdbcType="VARCHAR" property="assetDocumentNum" />
+    <result column="assetBuyDate" jdbcType="VARCHAR" property="assetBuyDate" />
+    <result column="assetTakePeople" jdbcType="VARCHAR" property="assetTakePeople" />
+    <result column="assetRemrk" jdbcType="VARCHAR" property="assetRemrk" />
+    <result column="storeNum" jdbcType="INTEGER" property="storeNum" />
+    <result column="dicProfitLossNum" jdbcType="INTEGER" property="dicProfitLossNum" />
+    <result column="departNum" jdbcType="VARCHAR" property="departNum" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    assetNum, assetName, assetModel, assetPrice, assetFactory, assetDocumentNum, assetBuyDate, 
+    assetTakePeople, assetRemrk, storeNum, dicProfitLossNum, departNum
+  </sql>
+  <select id="selectByExample" parameterType="cn.tit.ias.entity.AssetInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ias_asset
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ias_asset
+    where assetNum = #{assetNum,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ias_asset
+    where assetNum = #{assetNum,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.tit.ias.entity.AssetInfo">
+    insert into ias_asset (assetNum, assetName, assetModel, 
+      assetPrice, assetFactory, assetDocumentNum, 
+      assetBuyDate, assetTakePeople, assetRemrk, 
+      storeNum, dicProfitLossNum, departNum
+      )
+    values (#{assetNum,jdbcType=VARCHAR}, #{assetName,jdbcType=VARCHAR}, #{assetModel,jdbcType=VARCHAR}, 
+      #{assetPrice,jdbcType=REAL}, #{assetFactory,jdbcType=VARCHAR}, #{assetDocumentNum,jdbcType=VARCHAR}, 
+      #{assetBuyDate,jdbcType=VARCHAR}, #{assetTakePeople,jdbcType=VARCHAR}, #{assetRemrk,jdbcType=VARCHAR}, 
+      #{storeNum,jdbcType=INTEGER}, #{dicProfitLossNum,jdbcType=INTEGER}, #{departNum,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.tit.ias.entity.AssetInfo">
+    insert into ias_asset
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="assetNum != null">
+        assetNum,
+      </if>
+      <if test="assetName != null">
+        assetName,
+      </if>
+      <if test="assetModel != null">
+        assetModel,
+      </if>
+      <if test="assetPrice != null">
+        assetPrice,
+      </if>
+      <if test="assetFactory != null">
+        assetFactory,
+      </if>
+      <if test="assetDocumentNum != null">
+        assetDocumentNum,
+      </if>
+      <if test="assetBuyDate != null">
+        assetBuyDate,
+      </if>
+      <if test="assetTakePeople != null">
+        assetTakePeople,
+      </if>
+      <if test="assetRemrk != null">
+        assetRemrk,
+      </if>
+      <if test="storeNum != null">
+        storeNum,
+      </if>
+      <if test="dicProfitLossNum != null">
+        dicProfitLossNum,
+      </if>
+      <if test="departNum != null">
+        departNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="assetNum != null">
+        #{assetNum,jdbcType=VARCHAR},
+      </if>
+      <if test="assetName != null">
+        #{assetName,jdbcType=VARCHAR},
+      </if>
+      <if test="assetModel != null">
+        #{assetModel,jdbcType=VARCHAR},
+      </if>
+      <if test="assetPrice != null">
+        #{assetPrice,jdbcType=REAL},
+      </if>
+      <if test="assetFactory != null">
+        #{assetFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="assetDocumentNum != null">
+        #{assetDocumentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="assetBuyDate != null">
+        #{assetBuyDate,jdbcType=VARCHAR},
+      </if>
+      <if test="assetTakePeople != null">
+        #{assetTakePeople,jdbcType=VARCHAR},
+      </if>
+      <if test="assetRemrk != null">
+        #{assetRemrk,jdbcType=VARCHAR},
+      </if>
+      <if test="storeNum != null">
+        #{storeNum,jdbcType=INTEGER},
+      </if>
+      <if test="dicProfitLossNum != null">
+        #{dicProfitLossNum,jdbcType=INTEGER},
+      </if>
+      <if test="departNum != null">
+        #{departNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.tit.ias.entity.AssetInfo">
+    update ias_asset
+    <set>
+      <if test="assetName != null">
+        assetName = #{assetName,jdbcType=VARCHAR},
+      </if>
+      <if test="assetModel != null">
+        assetModel = #{assetModel,jdbcType=VARCHAR},
+      </if>
+      <if test="assetPrice != null">
+        assetPrice = #{assetPrice,jdbcType=REAL},
+      </if>
+      <if test="assetFactory != null">
+        assetFactory = #{assetFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="assetDocumentNum != null">
+        assetDocumentNum = #{assetDocumentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="assetBuyDate != null">
+        assetBuyDate = #{assetBuyDate,jdbcType=VARCHAR},
+      </if>
+      <if test="assetTakePeople != null">
+        assetTakePeople = #{assetTakePeople,jdbcType=VARCHAR},
+      </if>
+      <if test="assetRemrk != null">
+        assetRemrk = #{assetRemrk,jdbcType=VARCHAR},
+      </if>
+      <if test="storeNum != null">
+        storeNum = #{storeNum,jdbcType=INTEGER},
+      </if>
+      <if test="dicProfitLossNum != null">
+        dicProfitLossNum = #{dicProfitLossNum,jdbcType=INTEGER},
+      </if>
+      <if test="departNum != null">
+        departNum = #{departNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where assetNum = #{assetNum,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.tit.ias.entity.AssetInfo">
+    update ias_asset
+    set assetName = #{assetName,jdbcType=VARCHAR},
+      assetModel = #{assetModel,jdbcType=VARCHAR},
+      assetPrice = #{assetPrice,jdbcType=REAL},
+      assetFactory = #{assetFactory,jdbcType=VARCHAR},
+      assetDocumentNum = #{assetDocumentNum,jdbcType=VARCHAR},
+      assetBuyDate = #{assetBuyDate,jdbcType=VARCHAR},
+      assetTakePeople = #{assetTakePeople,jdbcType=VARCHAR},
+      assetRemrk = #{assetRemrk,jdbcType=VARCHAR},
+      storeNum = #{storeNum,jdbcType=INTEGER},
+      dicProfitLossNum = #{dicProfitLossNum,jdbcType=INTEGER},
+      departNum = #{departNum,jdbcType=VARCHAR}
+    where assetNum = #{assetNum,jdbcType=VARCHAR}
+  </update>
+</mapper>
